@@ -133,6 +133,10 @@ typedef struct rxConfig_s {
     rxChannelRangeConfiguration_t channelRanges[NON_AUX_CHANNEL_COUNT];
 } rxConfig_t;
 
+#ifdef USE_FPF132X
+#include "../drivers/rx_power_fpf132x.h"
+#endif
+
 #define REMAPPABLE_CHANNEL_COUNT (sizeof(((rxConfig_t *)0)->rcmap) / sizeof(((rxConfig_t *)0)->rcmap[0]))
 
 typedef struct rxRuntimeConfig_s {

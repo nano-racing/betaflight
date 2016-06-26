@@ -702,6 +702,20 @@ static void resetConf(void)
     masterConfig.serialConfig.portConfigs[2].functionMask = FUNCTION_RX_SERIAL;
 #endif
 
+#ifdef FLEXFC
+    featureSet(FEATURE_RX_SERIAL);
+    featureSet(FEATURE_MOTOR_STOP);
+    featureClear(FEATURE_ONESHOT125);
+    masterConfig.batteryConfig.vbatscale = 20;
+    masterConfig.mag_hardware = MAG_NONE;
+    masterConfig.fast_pwm_protocol = 0;
+    masterConfig.serialConfig.portConfigs[2].functionMask = FUNCTION_RX_SERIAL;
+	masterConfig.rxConfig.serialrx_provider = SERIALRX_SPEKTRUM1024;
+    parseRcChannels("TAER1234", &masterConfig.rxConfig);
+	masterConfig.rxPowerConfig.rxPower = 1;
+	masterConfig.rxPowerConfig.rxVoltage = 3.3;
+#endif
+
     // copy first profile into remaining profile
     for (i = 1; i < MAX_PROFILE_COUNT; i++) {
         memcpy(&masterConfig.profile[i], currentProfile, sizeof(profile_t));

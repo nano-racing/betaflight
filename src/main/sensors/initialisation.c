@@ -130,6 +130,19 @@ const extiConfig_t *selectMPUIntExtiConfig(void)
     return &spRacingF3MPUIntExtiConfig;
 #endif
 
+#if defined(FLEXFC)
+    static const extiConfig_t flexFCMPUIntExtiConfig = {
+            .gpioAHBPeripherals = RCC_AHBPeriph_GPIOA,
+            .gpioPort = GPIOA,
+            .gpioPin = Pin_3,
+            .exti_port_source = EXTI_PortSourceGPIOA,
+            .exti_pin_source = EXTI_PinSource3,
+            .exti_line = EXTI_Line3,
+            .exti_irqn = EXTI3_IRQn
+    };
+    return &flexFCMPUIntExtiConfig;
+#endif
+
 #if defined(CC3D)
     static const extiConfig_t cc3dMPUIntExtiConfig = {
             .gpioAPB2Peripherals = RCC_APB2Periph_GPIOA,

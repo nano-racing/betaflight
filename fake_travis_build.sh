@@ -18,7 +18,8 @@ targets=("PUBLISHMETA=True" \
     "TARGET=ALIENFLIGHTF3" \
     "TARGET=DOGE" \
     "TARGET=SINGULARITY" \
-    "TARGET=FURYF3")
+    "TARGET=FURYF3" \
+	"TARGET=FLEXFC" )
 
 #fake a travis build environment
 export TRAVIS_BUILD_NUMBER=$(date +%s)

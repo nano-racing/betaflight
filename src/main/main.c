@@ -314,7 +314,7 @@ void init(void)
 #endif
 
     if (masterConfig.fast_pwm_protocol == PWM_TYPE_ONESHOT125) {
-        featureSet(FEATURE_ONESHOT125);
+        //featureSet(FEATURE_ONESHOT125);
     } else {
         featureClear(FEATURE_ONESHOT125);
     }
@@ -647,6 +647,10 @@ void init(void)
 
 #ifdef CJMCU
     LED2_ON;
+#endif
+
+#ifdef USE_FPF132X
+    fpf132xInit(&masterConfig.rxPowerConfig);
 #endif
 
     // Latch active features AGAIN since some may be modified by init().

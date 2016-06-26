@@ -439,6 +439,27 @@ const timerHardware_t timerHardware[USABLE_TIMER_CHANNEL_COUNT] = {
 
 #endif
 
+#if defined(FLEXFC)
+const timerHardware_t timerHardware[USABLE_TIMER_CHANNEL_COUNT] = {
+    { TIM2,  GPIOB, Pin_11, TIM_Channel_4, TIM2_IRQn,               0, Mode_AF_PP, GPIO_PinSource11, GPIO_AF_1},  // RC_PPM - PB11 - TIM2_CH4
+//  Map PPM input to pad ADC/other on flexfc
+//  { TIM2,  GPIOA, Pin_2, TIM_Channel_3, TIM2_IRQn,               0, Mode_AF_PP, GPIO_PinSource2, GPIO_AF_1},  // RC_PPM - PA15 - TIM8_CH1
+
+    { TIM4,  GPIOB, Pin_9,  TIM_Channel_4, TIM4_IRQn,               1, Mode_AF_PP, GPIO_PinSource9,  GPIO_AF_2},  // PWM1 - PB9
+    { TIM4,  GPIOB, Pin_8,  TIM_Channel_3, TIM4_IRQn,               1, Mode_AF_PP, GPIO_PinSource8,  GPIO_AF_2},  // PWM2 - PB8
+    { TIM4,  GPIOB, Pin_7,  TIM_Channel_2, TIM4_IRQn,               1, Mode_AF_PP, GPIO_PinSource7,  GPIO_AF_2},  // PWM3 - PB7
+    { TIM4,  GPIOB, Pin_6,  TIM_Channel_1, TIM4_IRQn,               1, Mode_AF_PP, GPIO_PinSource6,  GPIO_AF_2},  // PWM4 - PB6
+    { TIM3,  GPIOB, Pin_5,  TIM_Channel_2, TIM3_IRQn,               1, Mode_AF_PP, GPIO_PinSource5,  GPIO_AF_2},  // PWM5 - PB5
+    { TIM3,  GPIOB, Pin_4,  TIM_Channel_1, TIM3_IRQn,               1, Mode_AF_PP, GPIO_PinSource4,  GPIO_AF_2},  // PWM6 - PB4
+};
+
+#define USED_TIMERS  (TIM_N(2) | TIM_N(3) | TIM_N(4))
+
+#define TIMER_APB1_PERIPHERALS (RCC_APB1Periph_TIM2 | RCC_APB1Periph_TIM3 | RCC_APB1Periph_TIM4)
+#define TIMER_AHB_PERIPHERALS (RCC_AHBPeriph_GPIOB)
+
+#endif
+
 #define USED_TIMER_COUNT BITCOUNT(USED_TIMERS)
 #define CC_CHANNELS_PER_TIMER 4              // TIM_Channel_1..4
 

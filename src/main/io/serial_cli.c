@@ -792,6 +792,11 @@ const clivalue_t valueTable[] = {
 #ifdef LED_STRIP
     { "ledstrip_visual_beeper",      VAR_UINT8  | MASTER_VALUE | MODE_LOOKUP,  &masterConfig.ledstrip_visual_beeper, .config.lookup = { TABLE_OFF_ON } },
 #endif
+
+#ifdef USE_FPF132X
+    { "rx_power",                   VAR_UINT8  | MASTER_VALUE,  &masterConfig.rxPowerConfig.rxPower, .config.minmax = { 0,  1 } },
+    { "rx_voltage",                 VAR_FLOAT  | MASTER_VALUE,  &masterConfig.rxPowerConfig.rxVoltage, .config.minmax = { 0,  5 } },
+#endif
 };
 
 #define VALUE_COUNT (sizeof(valueTable) / sizeof(clivalue_t))

@@ -120,6 +120,45 @@ bool mpu6000ReadRegister(uint8_t reg, uint8_t length, uint8_t *data)
     return true;
 }
 
+static void mpu6000SpiInit(void)
+{
+    static bool hardwareInitialised = false;
+
+    if (hardwareInitialised) {
+        return;
+    }
+
+#ifdef STM32F303xC
+    RCC_AHBPeriphClockCmd(MPU6000_CS_GPIO_CLK_PERIPHERAL, ENABLE);
+
+    GPIO_InitTypeDef GPIO_InitStructure;
+    GPIO_InitStructure.GPIO_Pin = MPU6000_CS_PIN;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+    GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+
+    GPIO_Init(MPU6000_CS_GPIO, &GPIO_InitStructure);
+#endif
+
+#ifdef STM32F10X
+    RCC_APB2PeriphClockCmd(MPU6000_CS_GPIO_CLK_PERIPHERAL, ENABLE);
+
+    gpio_config_t gpio;
+    // CS as output
+    gpio.mode = Mode_Out_PP;
+    gpio.pin = MPU6000_CS_PIN;
+    gpio.speed = Speed_50MHz;
+    gpioInit(MPU6000_CS_GPIO, &gpio);
+#endif
+
+    GPIO_SetBits(MPU6000_CS_GPIO,   MPU6000_CS_PIN);
+
+    spiSetDivisor(MPU6000_SPI_INSTANCE, SPI_0_5625MHZ_CLOCK_DIVIDER);
+
+    hardwareInitialised = true;
+}
+
 void mpu6000SpiGyroInit(uint8_t lpf)
 {
     mpuIntExtiInit();
@@ -153,7 +192,9 @@ bool mpu6000SpiDetect(void)
 {
     uint8_t in;
     uint8_t attemptsRemaining = 5;
-
+    
+    mpu6000SpiInit();
+    
     spiSetDivisor(MPU6000_SPI_INSTANCE, SPI_0_5625MHZ_CLOCK_DIVIDER);
 
     mpu6000WriteRegister(MPU_RA_PWR_MGMT_1, BIT_H_RESET);

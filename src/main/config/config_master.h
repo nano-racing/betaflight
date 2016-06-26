@@ -147,6 +147,10 @@ typedef struct master_t {
     uint8_t blackbox_device;
 #endif
 
+#ifdef USE_FPF132X
+    rxPowerConfig_t rxPowerConfig;
+#endif
+
     uint32_t beeper_off_flags;
     uint32_t preferred_beeper_off_flags;
 

@@ -21,6 +21,7 @@ env:
   - TARGET=STM32F3DISCOVERY
   - TARGET=ALIENFLIGHTF1
   - TARGET=ALIENFLIGHTF3
+  - TARGET=FLEXFC
 
 # use new docker environment
 sudo: false
