@@ -314,7 +314,7 @@ void init(void)
 #endif
 
     if (masterConfig.fast_pwm_protocol == PWM_TYPE_ONESHOT125) {
-        //featureSet(FEATURE_ONESHOT125);
+        featureSet(FEATURE_ONESHOT125);
     } else {
         featureClear(FEATURE_ONESHOT125);
     }
